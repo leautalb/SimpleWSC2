@@ -2,7 +2,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.esisar.command_control</groupId>
-  <artifactId>Orion-C2-Client</artifactId>
+  <artifactId>Orion-C2-Server</artifactId>
   <version>1.0-SNAPSHOT</version>
   <build>
     <plugins>
@@ -11,7 +11,7 @@
         <artifactId>native-maven-plugin</artifactId>
         <version>0.10.1</version>
         <configuration>
-          <mainClass>org.esisar.command_control.MonClientMachine</mainClass>
+          <mainClass>org.esisar.command_control.Main</mainClass>
           <metadataRepository>
             <enabled>true</enabled>
           </metadataRepository>

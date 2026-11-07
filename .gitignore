@@ -1,0 +1,17 @@
+# Fichiers compilés Java
+*.class
+
+# Dossiers de build (Maven, Gradle, IDE)
+target/
+build/
+bin/
+
+# Fichiers d'environnement de développement (IDE)
+.idea/
+*.iml
+.settings/
+.project
+.classpath
+
+# Logs
+*.log
